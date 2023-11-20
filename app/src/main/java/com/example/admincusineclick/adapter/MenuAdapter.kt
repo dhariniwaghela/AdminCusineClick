@@ -38,7 +38,7 @@ class MenuAdapter(
                 val uri = Uri.parse(imageUri)
                 Glide.with(context).load(uri).into(menuItemImage)
                 menuItemName.text = menuItem.itemName
-                menuItemPrice.text = menuItem.itemPrice
+                menuItemPrice.text = "$" + menuItem.itemPrice
 
             }
 

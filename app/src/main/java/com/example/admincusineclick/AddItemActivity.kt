@@ -61,7 +61,7 @@ class AddItemActivity : AppCompatActivity() {
             //get data from fields
             foodItemName = binding.etFoodItemName.text.toString().trim()
             foodItemDescription = binding.etDescription.text.toString().trim()
-            foodItemPrice = binding.etIngredients.text.toString().trim()
+            foodItemPrice = binding.etFoodItemPrice.text.toString().trim()
             foodItemCategory = radioButton.text.toString()
             foodItemIngredients = binding.etIngredients.text.toString().trim()
             foodItemCalories = binding.etCalories.text.toString().trim()
