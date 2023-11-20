@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Admin \n CusineClick</string>
+    <string name="app_name">Admin \n CuisineClick</string>
     <string name="tag_line">Deliver Your Food</string>
     <string name="start_activity_line">Enjoy Restaurant Cusine at Home</string>
     <string name="btn_Login">Login</string>
