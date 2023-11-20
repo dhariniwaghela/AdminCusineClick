@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".VerifyEmailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="Verify Your Email Address"
+            android:textStyle="bold"
+            android:fontFamily="@font/lato"
+            android:textColor="@color/text_dark_green"
+            android:textSize="26sp"
+            android:id="@+id/forgotpassword"
+            android:drawablePadding="15dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            app:endIconDrawable="@drawable/arrow_down"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:padding="5dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/email_verify"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            app:endIconDrawable="@drawable/arrow_down"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_margin="15dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:fontFamily="@font/lato"
+            android:text="@string/emaillink"/>
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:layout_marginBottom="25dp"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:id="@+id/btnVerify"
+            android:layout_gravity="center"
+            android:text="Continue"
+            android:layout_margin="20dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/lato"
+            android:textSize="20sp"
+            android:layout_marginTop="200dp"
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@drawable/greenbuttongradient"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            app:endIconDrawable="@drawable/arrow_down"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:id="@+id/tvResendLink"
+            android:fontFamily="@font/lato"
+            android:text="Resend Link"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

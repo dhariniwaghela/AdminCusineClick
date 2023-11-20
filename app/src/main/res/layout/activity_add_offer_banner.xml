@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddOfferBannerActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="10dp"
+            android:id="@+id/buttonBack"
+            android:background="@android:color/transparent"
+            android:src="@drawable/arrow_left"/>
+
+        <TextView
+            android:textSize="28sp"
+            android:gravity="center"
+            android:fontFamily="@font/lato_bold"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Offer"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:padding="5dp">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bannerimage"
+        android:layout_gravity="center"
+        android:src="@drawable/addimg"
+        />
+    </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/etOfferDescription"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="20sp"
+        android:layout_margin="5dp"
+        android:background="@drawable/edittextshape"
+        android:hint="Enter Offer Description"
+        android:elevation="5dp"
+        android:fontFamily="@font/lato"
+        android:paddingStart="15dp"
+        android:inputType="text" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:id="@+id/btnSave"
+        android:text="Save Offer"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:fontFamily="@font/lato"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/greenbuttongradient"/>
+
+</LinearLayout>

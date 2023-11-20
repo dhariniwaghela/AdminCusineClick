@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminLoginActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="Admin Login"
+            android:textColor="@color/text_dark_green"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lato"
+            android:gravity="center"
+            android:text="Login To Your Admin Dashboard"
+            android:textColor="@color/text_dark_green"
+            android:textSize="16sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="35dp">
+            <EditText
+                android:id="@+id/editTextAdminEmailAddress"
+                android:layout_width="325dp"
+                android:layout_height="55dp"
+                android:ems="10"
+                android:textSize="20sp"
+                android:background="@drawable/edittextshape"
+                android:hint="Email"
+                android:elevation="5dp"
+                android:drawablePadding="15dp"
+                android:paddingStart="15dp"
+                android:drawableLeft="@drawable/mail"
+                android:inputType="textEmailAddress" />
+
+            <EditText
+                android:id="@+id/editTextAdminPassword"
+                android:layout_width="325dp"
+                android:layout_height="55dp"
+                android:background="@drawable/edittextshape"
+                android:ems="10"
+                android:elevation="5dp"
+                android:drawablePadding="15dp"
+                android:paddingStart="15dp"
+                android:textSize="20sp"
+                android:drawableLeft="@drawable/lock"
+                android:hint="Password"
+                android:layout_marginTop="20dp"
+                android:inputType="textPassword" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:id="@+id/btnAdminLogin"
+                android:text="@string/btn_Login"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:fontFamily="@font/lato"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="35dp"
+                android:padding="10dp"
+                android:background="@drawable/greenbuttongradient"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginTop="35dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot_password"
+                android:fontFamily="@font/lato"
+                android:textColor="@color/text_dark_green"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:id="@+id/tvforgotpassword"
+                android:layout_marginBottom="30dp"
+                />
+
+            <TextView
+                android:id="@+id/adminsignup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:text="Create New Admin Account"
+                android:textColor="@color/text_dark_green"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">Admin \n CusineClick</string>
+    <string name="tag_line">Deliver Your Food</string>
+    <string name="start_activity_line">Enjoy Restaurant Cusine at Home</string>
+    <string name="btn_Login">Login</string>
+    <string name="btn_Signup">Sign Up</string>
+    <string name="login_details">Add Your Details To Login</string>
+    <string name="signup_details">Add Your Details To Sign Up</string>
+
+    <string name="login_facebook">Login With Facebook</string>
+    <string name="login_google">Login With Google</string>
+    <string name="signup_facebook">Sign Up With Facebook</string>
+    <string name="signup_google">Sign Up With Google</string>
+
+    <string name="forgot_password">Forgot Your Password ?</string>
+    <string name="donthaveaccsignup">Don\'t Have Account? Sign Up</string>
+    <string name="alreadyhaveacclogin">Already Have an Account? Login</string>
+
+    <string name="chooselocation">Choose Your Location</string>
+
+    <string name="locationdetails">To provide you with the best dining experience,
+        we need your permission to access your device\'s location.
+        By enabling location services, we can offer
+        personalized restaurant recommendations, accurate
+         delivery estimates, and ensure a seamless
+         food delivery experience."</string>
+
+    <string name="newpassword">New Password</string>
+    <string name="createpwd">Create your new password here</string>
+    <string name="confirm">Confirm</string>
+    <string name="default_web_client_id">325309786586-80jio88oouiq2j02g5ujosa3cmuig2bv.apps.googleusercontent.com</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main_demo">MainActivity_demo</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="email_verify">
+      Please verify your email address to get access thousands of delicious Food items.\n
+    </string>
+    <string name="emaillink">
+         Verification Link has already been send to your Registered Emailid.
+    </string>
+    <string name="food_details">
+        Nam in scelerisque sem. Mauris volutpat, dolor id interdum ullamcorper, risus dolor
+    </string>
+
+    <string name="ingredients">
+        ingredients in food \ntomatoes,onions \nmushrooms
+    </string>
+</resources>
