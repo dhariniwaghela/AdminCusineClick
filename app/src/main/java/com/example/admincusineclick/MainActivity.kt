@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             auth!!.signOut()
             val intent = Intent(this, AdminLoginActivity::class.java)
             startActivity(intent)
+            finish()
             //logout but not kill fragment
             Toast.makeText(this, "Logout Successful !", Toast.LENGTH_SHORT).show()
         })

@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityAddOfferBannerBinding
-import com.example.admincusineclick.model.ItemDetails
+import com.example.admincusineclick.model.BannerDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -35,6 +35,9 @@ class AddOfferBannerActivity : AppCompatActivity() {
         binding.bannerimage.setOnClickListener{
             pickImage.launch("image/*")
         }
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
         binding.btnSave.setOnClickListener{
             //get data from fields
             bannerDescription = binding.etOfferDescription.text.toString().trim()
@@ -58,9 +61,9 @@ class AddOfferBannerActivity : AppCompatActivity() {
             uploadTask.addOnCompleteListener {
                 imageRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                     //create new Banner item
-                    val newItem = ItemDetails(
-                        itemDescriptions = bannerDescription,
-                        itemImage = downloadUrl.toString(),
+                    val newItem = BannerDetails(
+                        bannerDescription = bannerDescription,
+                        bannerImage = downloadUrl.toString(),
                     )
                     newItemKey?.let { key ->
                         bannerRef.child(key).setValue(newItem).addOnSuccessListener {

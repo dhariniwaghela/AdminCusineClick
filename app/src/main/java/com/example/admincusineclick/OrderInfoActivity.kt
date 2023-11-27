@@ -23,5 +23,9 @@ class OrderInfoActivity : AppCompatActivity() {
         val adapter = OrderAdapter(ArrayList(OrderitemName) , ArrayList(OrderitemtemPrice) , ArrayList(OrderitemImage))
         binding.recyclerviewOrderitem.layoutManager = LinearLayoutManager(this)
         binding.recyclerviewOrderitem.adapter = adapter
+
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
     }
 }

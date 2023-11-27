@@ -30,6 +30,9 @@ class ViewMenuActivity : AppCompatActivity() {
         //database initializr
         databaseReference = FirebaseDatabase.getInstance().reference
         retriveMenuItems()
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
 
     }
 

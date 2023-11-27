@@ -2,7 +2,6 @@ package com.example.admincusineclick
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincusineclick.adapter.OfferAdapter
@@ -22,17 +21,16 @@ class ViewOffersActivity : AppCompatActivity() {
     private lateinit var databaseReference: DatabaseReference
     private var bannerItem: ArrayList<BannerDetails> = ArrayList()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        //database initializr
         databaseReference = FirebaseDatabase.getInstance().reference
-        if(bannerItem.size > 0) {
-            retrieveBanners()
-        }else{
-            Toast.makeText(this,"no data show",Toast.LENGTH_SHORT).show()
-        }
+        retrieveBanners()
 
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
     }
     private fun retrieveBanners(){
         database = FirebaseDatabase.getInstance()
@@ -41,6 +39,7 @@ class ViewOffersActivity : AppCompatActivity() {
         //fetch database
         bannerRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                bannerItem.clear()
                 for (bannersnapshot in snapshot.children) {
                     val bannerItems = bannersnapshot.getValue(BannerDetails::class.java)
                     bannerItems?.let {
