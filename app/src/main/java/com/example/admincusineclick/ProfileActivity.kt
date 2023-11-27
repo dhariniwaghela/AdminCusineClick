@@ -2,6 +2,7 @@ package com.example.admincusineclick
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityProfileBinding
 import com.example.admincusineclick.model.UserModel
@@ -49,11 +50,13 @@ class ProfileActivity : AppCompatActivity() {
     private fun getUserData() {
         databaseReference.child(uid).addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                userinfo = snapshot.getValue(UserModel::class.java)!!
-                binding.tvName.setText(userinfo.name)
-                binding.tvEmail.setText(userinfo.email)
-                binding.tvRest.setText(userinfo.restaurantName)
-
+                val user = snapshot.getValue(UserModel::class.java)
+                user?.let {
+                    userinfo = it
+                    binding.tvName.text = userinfo.name
+                    binding.tvEmail.text = userinfo.email
+                    binding.tvRestaturant.text = userinfo.restaurantName
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {

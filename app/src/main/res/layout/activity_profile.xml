@@ -6,81 +6,141 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ProfileActivity">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Admin Profile"
-        android:gravity="center"
-        android:layout_marginTop="35dp"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/lato"
-        android:textColor="@color/text_dark_green"
-        />
+        android:orientation="vertical"
+        android:layout_marginStart="20dp">
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Admin Account Info"
+            android:padding="5dp"
+            android:textSize="28sp"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/profile"
+            app:civ_border_width="4dp"
+            android:padding="10dp"
+            app:civ_border_color="@color/grey_font"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/profile_image"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:src="@drawable/user"
-        app:civ_border_width="2dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        app:civ_border_color="#FF000000"/>
-    <TextView
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Admin Name"
-        android:gravity="center"
-        android:id="@+id/tv_name"
-        android:layout_marginTop="10dp"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/lato"
-        android:textColor="@color/black"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Admin Email"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:id="@+id/tv_email"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/lato"
-        android:textColor="@color/black"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Restaurant Name"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:id="@+id/tv_rest"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/lato"
-        android:textColor="@color/black"
-        />
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_marginStart="20dp">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Basic Info"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:textSize="26sp"/>
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:id="@+id/btnedit"
-        android:text="Edit Profile"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:fontFamily="@font/lato"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:drawableLeft="@drawable/editpro"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="20dp"
-        android:padding="10dp"
-        android:background="@drawable/greenbuttongradient"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/btnedit"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="match_parent"
+            android:src="@drawable/pen"
+            android:padding="2dp"
+            app:civ_border_width="1dp"
+            android:layout_marginEnd="10dp"
+            app:civ_border_color="@color/grey_font"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_marginStart="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Name"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:layout_gravity="center"
+            android:hint="Name of Admin"
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:layout_marginStart="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="Restaurant Name"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvRestaturant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:layout_gravity="center"
+            android:hint="Restaurant name"
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="20dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato_bold"
+            android:text="EmailI"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lato"
+            android:layout_gravity="center"
+            android:hint="Email Address "
+            android:textColor="@color/grey_font"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+
 
     <TextView
         android:layout_width="300dp"
@@ -94,10 +154,9 @@
         android:textStyle="bold"
         android:drawableLeft="@drawable/forgotpwd"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:drawablePadding="20dp"
         android:padding="10dp"
         android:background="@drawable/greenbuttongradient"/>
-
 
 </LinearLayout>
