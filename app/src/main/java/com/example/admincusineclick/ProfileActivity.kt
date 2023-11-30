@@ -13,26 +13,30 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+
 class ProfileActivity : AppCompatActivity() {
 
     private val binding: ActivityProfileBinding by lazy {
         ActivityProfileBinding.inflate(layoutInflater)
     }
-    private lateinit var auth:FirebaseAuth
+
+    private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
     private lateinit var userinfo : UserModel
-    private lateinit var uid: String
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        //database initializr
-        auth= FirebaseAuth.getInstance()
-        uid= auth.currentUser?.uid.toString()
-        databaseReference = FirebaseDatabase.getInstance().getReference("Admin")
-        if(uid.isNotEmpty()){
-            getUserData()
+        auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        Log.d("user",user.toString())
+
+        if (user != null) {
+            val userId = user.uid
+            databaseReference = FirebaseDatabase.getInstance().getReference("Admin").child("AdminData").child(userId)
+           Log.d("uid",userId)
+            getAdminData()
+
         }
 
         binding.btnedit.setOnClickListener{
@@ -47,16 +51,13 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-    private fun getUserData() {
-        databaseReference.child(uid).addValueEventListener(object : ValueEventListener{
+    private fun getAdminData() {
+        databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val user = snapshot.getValue(UserModel::class.java)
-                user?.let {
-                    userinfo = it
-                    binding.tvName.text = userinfo.name
-                    binding.tvEmail.text = userinfo.email
-                    binding.tvRestaturant.text = userinfo.restaurantName
-                }
+                userinfo = snapshot.getValue(UserModel::class.java)!!
+                binding.tvName.setText(userinfo.name)
+                binding.tvEmail.setText(userinfo.email)
+                binding.tvRestaturant.setText(userinfo.restaurantName)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -65,4 +66,5 @@ class ProfileActivity : AppCompatActivity() {
 
         })
     }
+
 }

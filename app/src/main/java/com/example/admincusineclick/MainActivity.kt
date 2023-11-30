@@ -41,13 +41,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.offerDetails.setOnClickListener(View.OnClickListener {
             val i =Intent(this,ViewOffersActivity::class.java)
+
             startActivity(i)
         })
-
-        binding.profileInfo.setOnClickListener(View.OnClickListener {
-            val intent =Intent(this,ProfileActivity::class.java)
+        binding.profileInfo.setOnClickListener{
+            val intent = Intent(this,ProfileActivity::class.java)
             startActivity(intent)
-        })
+        }
 
         binding.logout.setOnClickListener(View.OnClickListener {
 

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityAdminSignupBinding
 import com.example.admincusineclick.model.UserModel
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -40,13 +41,14 @@ class AdminSignupActivity : AppCompatActivity() {
                 ")+"
     )
 
-    fun isValidString(str: String): Boolean {
+    private fun isValidString(str: String): Boolean {
         return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        FirebaseApp.initializeApp(this);
         binding.adminloginscreen.setOnClickListener {
             val loginintent = Intent(this, AdminLoginActivity::class.java)
             startActivity(loginintent)
@@ -60,7 +62,6 @@ class AdminSignupActivity : AppCompatActivity() {
         autoCompleteTextView.setOnItemClickListener { parent, view, position, id ->
             location = parent.getItemAtPosition(position) as String
         }
-
         //initialize firebase database
         auth = Firebase.auth
         //initialize database
@@ -98,9 +99,8 @@ class AdminSignupActivity : AppCompatActivity() {
                 sendVerificationEmail()
                 finish()
             } else {
-                Toast.makeText(this, "Account Creation Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Email is already existed", Toast.LENGTH_SHORT).show()
                 Log.d("Account", "create Account:Failure", task.exception)
-
             }
         }
 
@@ -114,10 +114,10 @@ class AdminSignupActivity : AppCompatActivity() {
         restaurantName = binding.editTextRestaurantName.text.toString().trim()
 
 
-        val user = UserModel(username, email, password,restaurantName)
+        val user = UserModel(username, email, password, restaurantName)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         //save user data
-        database.child("Admin").child(userId).setValue(user)
+        database.child("Admin").child("AdminData").child(userId).setValue(user)
     }
 
     private fun sendVerificationEmail() {
