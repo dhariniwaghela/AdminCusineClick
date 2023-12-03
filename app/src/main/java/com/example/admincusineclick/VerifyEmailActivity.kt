@@ -29,6 +29,10 @@ class VerifyEmailActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // email sent
                         // after email is sent just logout the user and finish this activity
+                        val sharedPreferences = getSharedPreferences("AdminPref", MODE_PRIVATE)
+                        val myEdit = sharedPreferences.edit()
+                        myEdit.putString("userId", user.uid)
+                        myEdit.apply()
                         startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {

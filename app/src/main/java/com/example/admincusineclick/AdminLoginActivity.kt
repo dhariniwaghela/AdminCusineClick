@@ -1,12 +1,19 @@
 package com.example.admincusineclick
 
+import android.R
+import android.app.AlertDialog
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityAdminLoginBinding
+import com.example.admincusineclick.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -22,6 +29,8 @@ class AdminLoginActivity : AppCompatActivity() {
     private lateinit var password: String
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
+    val CUSTOM_PREF_NAME = "User_data"
+    private lateinit var progressAlertDialog: AlertDialog
     private val binding: ActivityAdminLoginBinding by lazy {
         ActivityAdminLoginBinding.inflate(layoutInflater)
     }
@@ -29,6 +38,7 @@ class AdminLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        progressAlertDialog = createProgressDialog(this)
 
         //inialization of firebase auth
         auth = Firebase.auth
@@ -47,7 +57,8 @@ class AdminLoginActivity : AppCompatActivity() {
             if (email.isBlank() || password.isBlank()) {
                 Toast.makeText(this, "Please fill all details", Toast.LENGTH_SHORT).show()
             } else {
-                 LoginUser()
+                displayProgressDialog()
+                LoginUser()
             }
 
         }
@@ -62,42 +73,90 @@ class AdminLoginActivity : AppCompatActivity() {
 
     }
 
+    private fun createProgressDialog(currentActivity: AppCompatActivity): AlertDialog {
+        val vLayout = LinearLayout(currentActivity)
+        vLayout.orientation = LinearLayout.VERTICAL
+        vLayout.setPadding(50, 50, 50, 50)
+        vLayout.addView(ProgressBar(currentActivity, null, R.attr.progressBarStyleLarge))
+        return AlertDialog.Builder(currentActivity)
+            .setCancelable(false)
+            .setView(vLayout)
+            .create()
+    }
+
+    fun displayProgressDialog() {
+        if (!progressAlertDialog.isShowing()) {
+            progressAlertDialog.show()
+        }
+    }
+
+    fun hideProgressDialog() {
+        progressAlertDialog.dismiss()
+    }
+
+    val handler = Handler<String> {
+        hideProgressDialog()
+        when(it){
+            "0" -> Toast.makeText(
+                this@AdminLoginActivity,
+                "Account may be  used by another user",
+                Toast.LENGTH_SHORT
+            ).show()
+            "1" -> {
+                val sharedPreferences = getSharedPreferences("AdminPref", MODE_PRIVATE)
+                val myEdit = sharedPreferences.edit()
+                myEdit.putString("userId", auth.currentUser?.uid)
+                myEdit.apply()
+                val loginintent = Intent(this@AdminLoginActivity, MainActivity::class.java)
+                startActivity(loginintent)
+            }
+            "2" -> Toast.makeText(
+                this@AdminLoginActivity,
+                "Account doesn't exist or Invalid credentials",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
     private fun LoginUser() {
+        var isUserExist = -1
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                var isAdminFound= false
-                val admindatareference = database.reference.child("Admin").child("AdminData")
+                database = FirebaseDatabase.getInstance()
+                val userDataReference = database.reference.child("Admin").child("AdminData");
                 val valueEventListener = object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (ds in dataSnapshot.children) {
-                            val adminEmail = ds.child("email").getValue(String::class.java)
-                            val adminPassword = ds.child("password").getValue(String::class.java)
-                            isAdminFound = adminEmail == email && adminPassword == password
+                            val userModel = ds.getValue(UserModel::class.java)!!
+                            if(userModel.userId != null && ds.key == auth.currentUser?.uid){
+                                isUserExist = 1
+                                handler.call(isUserExist.toString())
+                                break
+                            }
                         }
-                        if (isAdminFound) {
-                            val mainintent = Intent(this@AdminLoginActivity, MainActivity::class.java)
-                            startActivity(mainintent)
-                            finish()
-                            Toast.makeText(this@AdminLoginActivity, "Login Successfull", Toast.LENGTH_SHORT).show()
-                        }
-                        else{
-                            Toast.makeText(this@AdminLoginActivity, "Account Does not exist ", Toast.LENGTH_SHORT).show()
+                        if(isUserExist == -1){
+                            isUserExist = 2
+                            handler.call(isUserExist.toString())
                         }
                     }
-
                     override fun onCancelled(databaseError: DatabaseError) {
-                        Log.d(TAG, databaseError.getMessage()) //Don't ignore errors!
-                        Toast.makeText(this@AdminLoginActivity, "Account Does not exist ", Toast.LENGTH_SHORT).show()
+                        isUserExist = 0
+                        handler.call(isUserExist.toString())
                     }
                 }
-                admindatareference.addListenerForSingleValueEvent(valueEventListener)
-
+                userDataReference.addListenerForSingleValueEvent(valueEventListener)
             } else {
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                isUserExist = 2
+                handler.call(isUserExist.toString())
+
             }
         }
+    }
 
+    fun interface Handler<S> {
+        fun call(String: S);
+    }
 
     }
 
-}
+

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityAdminSignupBinding
 import com.example.admincusineclick.model.UserModel
 import com.google.firebase.FirebaseApp
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -48,7 +49,7 @@ class AdminSignupActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        FirebaseApp.initializeApp(this);
+//        FirebaseApp.initializeApp(this);
         binding.adminloginscreen.setOnClickListener {
             val loginintent = Intent(this, AdminLoginActivity::class.java)
             startActivity(loginintent)
@@ -87,7 +88,6 @@ class AdminSignupActivity : AppCompatActivity() {
             } else {
                 createAccount(email, password)
             }
-
         }
     }
 
@@ -114,8 +114,8 @@ class AdminSignupActivity : AppCompatActivity() {
         restaurantName = binding.editTextRestaurantName.text.toString().trim()
 
 
-        val user = UserModel(username, email, password, restaurantName)
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val user = UserModel(userId,username, email, password, restaurantName)
         //save user data
         database.child("Admin").child("AdminData").child(userId).setValue(user)
     }

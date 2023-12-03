@@ -1,5 +1,6 @@
 package com.example.admincusineclick
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         binding.logout.setOnClickListener(View.OnClickListener {
 
             auth!!.signOut()
+            val preferenceManager = getSharedPreferences("AdminPref", Context.MODE_PRIVATE)
+            preferenceManager?.edit()?.clear()?.apply()
             val intent = Intent(this, AdminLoginActivity::class.java)
             startActivity(intent)
             finish()
