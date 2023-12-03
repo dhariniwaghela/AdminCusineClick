@@ -73,10 +73,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:weightSum="2"
                 android:gravity="center"
                android:layout_marginStart="10dp">
 
+                <!--
                 <ImageButton
                     android:id="@+id/btnEditDetails"
                     android:layout_width="0dp"
@@ -84,12 +84,12 @@
                     android:layout_height="32dp"
                     android:src="@drawable/edit"
                     android:background="@color/white"
-
                    />
+                -->
+
                 <ImageButton
                     android:id="@+id/btnDeleteItem"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:src="@drawable/bin"
                     android:background="@color/white"

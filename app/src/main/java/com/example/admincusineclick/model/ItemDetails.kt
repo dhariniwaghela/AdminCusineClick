@@ -7,8 +7,7 @@ data class ItemDetails(
     val itemImage: String? = null,
     val itemIngredients : String? = null,
     val itemCategory : String?  = null,
-    val itemCalories : String? = null
+    val itemCalories : String? = null,
+    val itemId:String?=null
+)
 
-) {
-
-}

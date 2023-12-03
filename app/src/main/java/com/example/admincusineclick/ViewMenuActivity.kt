@@ -18,6 +18,7 @@ class ViewMenuActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
     private var menuItem: ArrayList<ItemDetails> = ArrayList()
+    private lateinit var menuAdapter: MenuAdapter
 
 
     private val binding: ActivityViewMenuBinding by lazy {
@@ -29,10 +30,15 @@ class ViewMenuActivity : AppCompatActivity() {
         setContentView(binding.root)
         //database initializr
         databaseReference = FirebaseDatabase.getInstance().reference
+        setAdapter()
+
         retriveMenuItems()
+
+
         binding.buttonBack.setOnClickListener {
             finish()
         }
+
 
     }
 
@@ -50,7 +56,7 @@ class ViewMenuActivity : AppCompatActivity() {
                         menuItem.add(it)
                     }
                 }
-                setAdapter()
+                menuAdapter.updateList(menuItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -61,10 +67,9 @@ class ViewMenuActivity : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-               val adapter = MenuAdapter(this, menuItem,databaseReference)
+               menuAdapter = MenuAdapter(this)
                binding.recyclerviewMenuItems.layoutManager = LinearLayoutManager(this)
-               binding.recyclerviewMenuItems.adapter = adapter
-
+               binding.recyclerviewMenuItems.adapter = menuAdapter
 
     }
 }

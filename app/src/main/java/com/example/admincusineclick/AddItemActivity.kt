@@ -69,7 +69,7 @@ class AddItemActivity : AppCompatActivity() {
 
             if (!(foodItemName.isBlank() || foodItemDescription.isBlank() || foodItemPrice.isBlank() || foodItemCategory.isBlank() || foodItemIngredients.isBlank() || foodItemCalories.isBlank())) {
                 uploadData()
-                } else {
+            } else {
                 Toast.makeText(this, "fill all details", Toast.LENGTH_SHORT).show()
             }
 
@@ -82,10 +82,9 @@ class AddItemActivity : AppCompatActivity() {
 
     private fun uploadData() {
         //get a refernce data node"menu"
-        val Menuref: DatabaseReference = database.getReference("menu")
+        val Menuref: DatabaseReference = database.getReference("menu").push()
         //generate a unique key for each menu item
-        val newItemKey: String? = Menuref.push().key
-
+        val newItemKey: String? = Menuref.key
         if (foodItemImageUri != null) {
             val StorageRef: StorageReference = FirebaseStorage.getInstance().reference
             val imageRef: StorageReference = StorageRef.child("Menu_image/${newItemKey}.jpg")
@@ -100,20 +99,19 @@ class AddItemActivity : AppCompatActivity() {
                         itemCategory = foodItemCategory,
                         itemCalories = foodItemCalories,
                         itemImage = downloadUrl.toString(),
-                        itemPrice = foodItemPrice
+                        itemPrice = foodItemPrice,
+                        itemId = newItemKey
                     )
-                    newItemKey?.let { key ->
-                        Menuref.child(key).setValue(newItem).addOnSuccessListener {
-                            Toast.makeText(this, "data uploaded successfully", Toast.LENGTH_SHORT)
-                                .show()
-                            finish()
-                        }
-                            .addOnCanceledListener {
-                                Toast.makeText(this, "Failed to upload data", Toast.LENGTH_SHORT)
-                                    .show()
 
-                            }
+                    Menuref.setValue(newItem).addOnSuccessListener {
+                        Toast.makeText(this, "Item Added Successfully in Menu", Toast.LENGTH_SHORT)
+                            .show()
+                        finish()
+
+                    }.addOnFailureListener {
+                        Toast.makeText(this, "Failed to upload data", Toast.LENGTH_SHORT).show()
                     }
+
                 }
 
             }.addOnFailureListener {

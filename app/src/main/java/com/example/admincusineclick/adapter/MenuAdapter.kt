@@ -2,22 +2,40 @@ package com.example.admincusineclick.adapter
 
 import android.content.Context
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.admincusineclick.databinding.SingleMenuItemBinding
 import com.example.admincusineclick.model.ItemDetails
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class MenuAdapter(
-    private val context: Context,
-    private val menuList: ArrayList<ItemDetails>,
-    databaseReference: DatabaseReference
-)  :
-    RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+    private val context: Context)  : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
+
+    private var menuitems: ArrayList<ItemDetails> = ArrayList()
+
+    //firebase instance
+    private var menuDatabaseReference: DatabaseReference
+
+    fun updateList(menuItem: MutableList<ItemDetails>) {
+        menuitems = menuItem as ArrayList<ItemDetails>
+        notifyDataSetChanged()
+    }
+
+
+    init {
+        val database = FirebaseDatabase.getInstance()
+        menuDatabaseReference = database.reference.child("menu")
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuAdapter.MenuViewHolder {
-        val binding = SingleMenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            SingleMenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MenuViewHolder(binding)
     }
 
@@ -26,25 +44,41 @@ class MenuAdapter(
         holder.bind(position)
     }
 
-    override fun getItemCount(): Int= menuList.size
+    override fun getItemCount(): Int = menuitems.size
 
 
-   inner class MenuViewHolder(private val binding: SingleMenuItemBinding) :
+    inner class MenuViewHolder(private val binding: SingleMenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             binding.apply {
-                val menuItem = menuList[position]
-                val imageUri = menuItem.itemImage
-                val uri = Uri.parse(imageUri)
+
+                menuItemName.text = menuitems[position].itemName.toString()
+                menuItemPrice.text = menuitems[position].itemPrice.toString()
+                val uriString = menuitems[position].itemImage
+                val uri = Uri.parse(uriString)
                 Glide.with(context).load(uri).into(menuItemImage)
-                menuItemName.text = menuItem.itemName
-                menuItemPrice.text = "$" + menuItem.itemPrice
+
+                binding.btnDeleteItem.setOnClickListener {
+
+                    menuDatabaseReference.child(menuitems[position].itemId!!).removeValue()
+                        .addOnSuccessListener {
+                            notifyItemRemoved(position)
+                            menuitems.removeAt(position)
+                            Toast.makeText(context,"item Deleted successfully",Toast.LENGTH_SHORT).show()
+                        }.addOnFailureListener {
+                            Log.d("error", "item not deleted")
+                        }
+                }
+
+
 
             }
-
         }
     }
-    }
+}
+
+
+
 
 
 
