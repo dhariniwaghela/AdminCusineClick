@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.admincusineclick.adapter.MenuAdapter
 import com.example.admincusineclick.databinding.ActivityViewMenuBinding
 import com.example.admincusineclick.model.ItemDetails
+import com.example.admincusineclick.model.UserModel
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,6 +23,10 @@ class ViewMenuActivity : AppCompatActivity() {
     private lateinit var menuAdapter: MenuAdapter
 
 
+    private lateinit var auth: FirebaseAuth
+    private var restaurantId : String = null.toString()
+
+
     private val binding: ActivityViewMenuBinding by lazy {
         ActivityViewMenuBinding.inflate(layoutInflater)
     }
@@ -29,11 +35,17 @@ class ViewMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         //database initializr
-        databaseReference = FirebaseDatabase.getInstance().reference
-        setAdapter()
+        auth = FirebaseAuth.getInstance()
+        val user = auth.currentUser
+        Log.d("user", user.toString())
 
-        retriveMenuItems()
+        if (user != null) {
+            restaurantId = user.uid
+            databaseReference = FirebaseDatabase.getInstance().reference
+            setAdapter()
+            retriveMenuItems()
 
+        }
 
         binding.buttonBack.setOnClickListener {
             finish()
@@ -43,6 +55,7 @@ class ViewMenuActivity : AppCompatActivity() {
     }
 
     private fun retriveMenuItems() {
+
         database = FirebaseDatabase.getInstance()
         val foodRef: DatabaseReference = database.reference.child("menu")
 
@@ -52,24 +65,25 @@ class ViewMenuActivity : AppCompatActivity() {
                 menuItem.clear()
                 for (foodsnapshot in snapshot.children) {
                     val menuItems = foodsnapshot.getValue(ItemDetails::class.java)
-                    menuItems?.let {
-                        menuItem.add(it)
+                    if (menuItems!!.restaurantId == restaurantId) {
+                        menuItems?.let {
+                            menuItem.add(it)
+                        }
                     }
                 }
                 menuAdapter.updateList(menuItem)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("error","error ${error.message}")
+                Log.d("error", "error ${error.message}")
             }
-
         })
     }
 
     private fun setAdapter() {
-               menuAdapter = MenuAdapter(this)
-               binding.recyclerviewMenuItems.layoutManager = LinearLayoutManager(this)
-               binding.recyclerviewMenuItems.adapter = menuAdapter
+        menuAdapter = MenuAdapter(this)
+        binding.recyclerviewMenuItems.layoutManager = LinearLayoutManager(this)
+        binding.recyclerviewMenuItems.adapter = menuAdapter
 
     }
 }

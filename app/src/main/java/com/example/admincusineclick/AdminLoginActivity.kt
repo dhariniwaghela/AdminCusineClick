@@ -128,7 +128,7 @@ class AdminLoginActivity : AppCompatActivity() {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         for (ds in dataSnapshot.children) {
                             val userModel = ds.getValue(UserModel::class.java)!!
-                            if(userModel.userId != null && ds.key == auth.currentUser?.uid){
+                            if(userModel.restaurantId != null && ds.key == auth.currentUser?.uid){
                                 isUserExist = 1
                                 handler.call(isUserExist.toString())
                                 break

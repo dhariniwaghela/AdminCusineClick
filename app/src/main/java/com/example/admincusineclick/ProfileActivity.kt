@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.example.admincusineclick.databinding.ActivityProfileBinding
 import com.example.admincusineclick.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -58,6 +59,9 @@ class ProfileActivity : AppCompatActivity() {
                 binding.tvName.setText(userinfo.name)
                 binding.tvEmail.setText(userinfo.email)
                 binding.tvRestaturant.setText(userinfo.restaurantName)
+                val imageUrl = userinfo.imgUri
+                this.let { Glide.with(this@ProfileActivity).load(imageUrl).placeholder(R.drawable.profile).error(R.drawable.profile).into(binding.profileImage) }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

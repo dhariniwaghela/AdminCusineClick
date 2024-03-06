@@ -56,7 +56,18 @@ class AdminSignupActivity : AppCompatActivity() {
         }
 
         val locationList =
-            arrayOf("Barrie", "Brampton", "Ottawa", "Missiusaga", "Kitchner", "Toronto")
+            arrayOf(
+                "Toronto",
+                "Hamilton",
+                "Ottawa",
+                "Mississauga",
+                "London",
+                "Kitchener",
+                "Markham",
+                "Windsor",
+                "Oshawa",
+                "Barrie"
+            )
         val adapter = ArrayAdapter(this, R.layout.simple_list_item_1, locationList)
         val autoCompleteTextView = binding.listOfLocation
         autoCompleteTextView.setAdapter(adapter)
@@ -115,7 +126,7 @@ class AdminSignupActivity : AppCompatActivity() {
 
 
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        val user = UserModel(userId,username, email, password, restaurantName)
+        val user = UserModel(userId, username, email, password, restaurantName)
         //save user data
         database.child("Admin").child("AdminData").child(userId).setValue(user)
     }
