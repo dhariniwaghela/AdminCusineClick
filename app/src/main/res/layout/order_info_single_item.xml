@@ -52,6 +52,7 @@
                     android:gravity="center"
                     android:fontFamily="@font/lato_bold"
                     android:text="Order Placed"
+                    android:id="@+id/restaurantName"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     />

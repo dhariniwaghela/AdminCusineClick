@@ -47,6 +47,7 @@ class OrderAdapter(private val context: Context)  :
         fun bind(position: Int) {
             binding.apply {
                 orderFoodPrice.text = OrderInfo[position].OrderAmount.toString()
+                restaurantName.text = OrderInfo[position].RestaurantName.toString()
             }
 
         }
