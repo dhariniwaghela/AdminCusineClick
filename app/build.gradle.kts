@@ -58,4 +58,13 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.google.code.gson:gson:2.10.1")
-}
+    // Add the Volley library
+    implementation("com.android.volley:volley:1.2.0")
+
+    // Add the OkHttp library
+        implementation("com.squareup.okhttp3:okhttp:4.9.1")
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0") // Gson converter
+    }

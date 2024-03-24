@@ -14,7 +14,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
+import java.util.Objects
+
 
 class OrderInfoActivity : AppCompatActivity() {
     private val binding: ActivityOrderInfoBinding by lazy {
@@ -23,14 +24,20 @@ class OrderInfoActivity : AppCompatActivity() {
 
     private lateinit var database: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
-    private var orderitem: ArrayList<Order> = ArrayList()
+    var orderitem : MutableList<Order> = arrayListOf()
     private lateinit var orderAdapter: OrderAdapter
 
     //get restaurant name to fetch order details
     private lateinit var restaurantinfo : UserModel
     private lateinit var auth: FirebaseAuth
     private lateinit var restaurantDatabaseReference: DatabaseReference
+    private lateinit var UserDatabaseReference: DatabaseReference
     var restaurantname : String? = ""
+    var userid : String? = ""
+    var userlocation = ""
+    var username = ""
+    //order item info saveing var
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,26 +79,47 @@ class OrderInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun retriveOrders() {
+    private fun getUserName(userId:String, callback: (String?) -> Unit) {
+        UserDatabaseReference = FirebaseDatabase.getInstance().getReference("User").child("UserData")
+        if (userId.isNotEmpty()) {
+            UserDatabaseReference.child(userId)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val userObj = snapshot.value as Map<String, Object>?
+                        val username = userObj?.get("name")?.toString()
+                        callback(username)
+                    }
 
+                    override fun onCancelled(error: DatabaseError) {
+                        // Handle onCancelled event if needed
+                        callback(null)
+                    }
+                })
+        } else {
+            callback(null)
+        }
+    }
+    private fun retriveOrders() {
         database = FirebaseDatabase.getInstance()
         val orderRef: DatabaseReference = database.reference.child("Order")
-        //fetch database
+
         orderRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 orderitem.clear()
                 for (ordersnapshot in snapshot.children) {
-                    for (orderItemvalue in (ordersnapshot.getValue() as Map<String, *>).entries) {
-                        if (orderItemvalue.key == restaurantname) {
-                            val gson = Gson()
-                            orderitem.add(
-                                gson.fromJson(
-                                    orderItemvalue.value.toString(),
-                                    Order::class.java
+                    userid = ordersnapshot.key
+                    for (snapShotTimeStamp in ordersnapshot.children) {
+                        for (restaurntSnapShot in snapShotTimeStamp.children) {
+                            if (restaurntSnapShot.key == restaurantname) {
+                                val orderObj = restaurntSnapShot.value as Map<String, Object>
+                                orderitem.add(
+                                    Order(
+                                        userId = userid,
+                                        OrderAmount = orderObj["OrderAmount"].toString(),
+                                    )
                                 )
-                            )
+                            }
                         }
-
                     }
                 }
                 orderAdapter.updateList(orderitem)
