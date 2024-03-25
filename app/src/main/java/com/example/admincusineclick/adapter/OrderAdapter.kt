@@ -1,26 +1,28 @@
 package com.example.admincusineclick.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.admincusineclick.Firebase.FcmApi
+import com.example.admincusineclick.Firebase.RequestNotification
+import com.example.admincusineclick.Firebase.SendNotificationModel
 import com.example.admincusineclick.databinding.OrderInfoSingleItemBinding
+import com.example.admincusineclick.getClient
 import com.example.admincusineclick.model.Order
-import com.example.admincusineclick.notificationApi.FcmApi
-import com.example.admincusineclick.notificationApi.FcmNotification
-import com.example.admincusineclick.notificationApi.FcmResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class OrderAdapter(private val context: Context)  :
     RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
@@ -41,6 +43,7 @@ class OrderAdapter(private val context: Context)  :
     init {
         val database = FirebaseDatabase.getInstance()
         menuDatabaseReference = database.reference.child("Order")
+        databaseReference = database.reference.child("User").child("UserData")
     }
 
 
@@ -78,43 +81,40 @@ class OrderAdapter(private val context: Context)  :
                     //fetching user info
                     databaseReference.child(userId)
                         .addValueEventListener(object : ValueEventListener {
+                            @SuppressLint("SuspiciousIndentation")
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 val userObj = snapshot.value as Map<String, Object>
-                                token = userObj["firebasetoken"].toString()
+                                 userObj.let {
+                                     token = userObj["firebasetoken"].toString()
 
-                                val retrofit = Retrofit.Builder()
-                                    .baseUrl("https://fcm.googleapis.com/fcm/")
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build()
+                                     val sendNotificationModel =
+                                         SendNotificationModel("Your Order Accepted", "Order Accepted")
+                                     val requestNotificaton = RequestNotification()
+                                     requestNotificaton.sendNotificationModel = sendNotificationModel
+                                     //token is id , whom you want to send notification ,
+                                     //token is id , whom you want to send notification ,
+                                     requestNotificaton.token = token
 
-                                val fcmApi = retrofit.create(FcmApi::class.java)
+                                     val apiService = getClient()?.create(FcmApi::class.java)
+                                     val responseBodyCall: Call<ResponseBody> =
+                                         apiService?.sendNotification(requestNotificaton)!!
+                                     responseBodyCall.enqueue(object : Callback<ResponseBody> {
+                                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                                             if (response.isSuccessful) {
+                                                 val fcmResponse = response.body()
+                                                 // Handle successful response
+                                                 Toast.makeText(context,"Task",Toast.LENGTH_SHORT).show()
+                                             } else {
+                                                 // Handle error response
+                                             }
+                                         }
 
-                                val notification = FcmNotification(
-                                    to = token,
-                                    data = mapOf(
-                                        "title" to "Your push notification message"
-                                    )
-                                )
-
-                                val call = fcmApi.sendNotification(notification)
-                                call.enqueue(object : Callback<FcmResponse> {
-                                    override fun onResponse(call: Call<FcmResponse>, response: Response<FcmResponse>) {
-                                        if (response.isSuccessful) {
-                                            val fcmResponse = response.body()
-                                            // Handle successful response
-                                            Toast.makeText(context,"Task",Toast.LENGTH_SHORT).show()
-                                        } else {
-                                            // Handle error response
-                                        }
-                                    }
-
-                                    override fun onFailure(call: Call<FcmResponse>, t: Throwable) {
-                                        // Handle failure
-                                    }
-                                })
-
+                                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                             // Handle failure
+                                         }
+                                     })
+                                }
                             }
-
                             override fun onCancelled(error: DatabaseError) {
                                 TODO("Not yet implemented")
                             }

@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.admincusineclick.databinding.ActivityAdminSignupBinding
 import com.example.admincusineclick.model.UserModel
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -16,6 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import java.util.regex.Pattern
 
 
@@ -118,6 +120,14 @@ class AdminSignupActivity : AppCompatActivity() {
     }
 
     private fun saveUserData() {
+        var token = ""
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+        token = task.result
         //retrive data
         username = binding.editTextAdminName.text.toString()
         email = binding.edittextEmail.text.toString().trim()
@@ -126,9 +136,11 @@ class AdminSignupActivity : AppCompatActivity() {
 
 
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
-        val user = UserModel(userId, username, email, password, restaurantName)
+        val user = UserModel(userId, username, email, password, restaurantName,token)
         //save user data
         database.child("Admin").child("AdminData").child(userId).setValue(user)
+        })
+
     }
 
     private fun sendVerificationEmail() {

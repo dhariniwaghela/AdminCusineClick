@@ -7,5 +7,6 @@ data class UserModel(
         val email: String? =null,
         val password: String? =null,
         var restaurantName: String? = null,
-        val imgUri:String?=null
+        val imgUri:String?=null,
+        val firebasetoken:String?=null
     )
