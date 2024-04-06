@@ -8,12 +8,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585183072161:android:8f331373e89a62492e05e0",
+        "mobilesdk_app_id": "1:585183072161:android:60a903fafb5a14f82e05e0",
         "android_client_info": {
-          "package_name": "com.example.admincusineclick"
+          "package_name": "com.admincusineclick"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "585183072161-mp5su5bfff48qgu6ejdqm598b3ooh5ne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBSvmguvL2E5UIt3Dwe1rZ87im4hHh7zyo"
@@ -21,7 +26,41 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585183072161-mp5su5bfff48qgu6ejdqm598b3ooh5ne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585183072161:android:102a1292b2b3f1442e05e0",
+        "android_client_info": {
+          "package_name": "com.cusineclick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585183072161-mp5su5bfff48qgu6ejdqm598b3ooh5ne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSvmguvL2E5UIt3Dwe1rZ87im4hHh7zyo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585183072161-mp5su5bfff48qgu6ejdqm598b3ooh5ne.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

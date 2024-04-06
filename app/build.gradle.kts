@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.admincusineclick"
+    namespace = "com.admincusineclick"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.admincusineclick"
+        applicationId = "com.admincusineclick"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

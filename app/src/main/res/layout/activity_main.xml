@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:fontFamily="@font/lato"
             android:gravity="center"
-            android:text="Admin Dashboard"
+            android:text="Restaurant Dashboard"
             android:textColor="@color/black"
             android:textSize="28sp"
             android:textStyle="bold" />

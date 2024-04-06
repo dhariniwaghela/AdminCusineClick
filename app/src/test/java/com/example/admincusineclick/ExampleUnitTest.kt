@@ -1,4 +1,4 @@
-package com.example.admincusineclick
+package com.admincusineclick
 
 import org.junit.Test
 

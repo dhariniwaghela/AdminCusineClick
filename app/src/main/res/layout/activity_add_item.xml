@@ -8,7 +8,14 @@
     android:orientation="vertical"
     android:weightSum="7"
     tools:context=".AddItemActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -39,7 +46,7 @@
             android:layout_height="0dp"
             android:layout_weight="6.5"
             android:orientation="vertical"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp">
 
             <TextView
@@ -116,15 +123,15 @@
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:layout_margin="5dp"
                 android:background="@drawable/edittextshape"
-                android:hint="Enter Food Item Description"
+                android:hint="@string/fooddescription"
                 android:elevation="5dp"
                 android:fontFamily="@font/lato"
                 android:paddingStart="15dp"
-                android:inputType="text" />
+                android:inputType="textMultiLine"/>
 
             <EditText
                 android:id="@+id/etIngredients"
@@ -186,12 +193,16 @@
                 android:fontFamily="@font/lato"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="10dp"
                 android:padding="10dp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/greenbuttongradient"/>
 
         </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

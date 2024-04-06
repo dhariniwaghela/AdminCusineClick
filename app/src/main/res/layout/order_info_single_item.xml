@@ -29,16 +29,6 @@
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/lato_bold"
-                    android:text="User Location"
-                    android:id="@+id/userLocation"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    />
-
 
                 <TextView
                     android:id="@+id/orderFoodPrice"
@@ -51,6 +41,16 @@
                     android:textColor="@color/text_green"
                     />
 
+                   <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:text="User Location"
+                    android:id="@+id/userLocation"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    />
+<!--
                 <TextView
                     android:id="@+id/itemList"
                     android:layout_width="match_parent"
@@ -60,6 +60,7 @@
                     android:textSize="18sp"
                     />
 
+                    -->
 
 
                 <androidx.appcompat.widget.AppCompatButton
